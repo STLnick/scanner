@@ -1,22 +1,48 @@
-# C++ Project Template
-It is considered "good form" to separate different pieces of a project such as the source and executable files into their own directories.  While not every project will use each of these directories, every project should use at least some of them.  A properly setup project will be easier to maintain and diagnose.
+# Scanner
+## Compilers - P1
 
-Makefile is a generic Makefile found on https://github.com/mbcrawfo/GenericMakefile, by Michael Crawford.  License for Makefile is MIT license as well, at least at time of download.
+**Implemented Option 3 -> Table & Driver**
 
-## Directory Structure
+**Version Control**:
+GitHub repo: https://github.com/STLnick/scanner
 
-`<project-name>/bin`     -> Compiler will put executable files in this directory
+---
 
-`<project-name>/include` -> Files that you include (header files) should be in this directory
+!! TODO: UPDATE file with new project names / run commands !!
+- Will be building one exe - testScanner
+- scanner() will be called inside that testing executable
+- scanner() is our actual scanner logic - i.e. the real project
 
-`<project-name>/lib`     -> Compiled library files go into this directory
+---
 
-`<project-name>/src`     -> Source code files go in this directory
+**To run the program**:
+First run 'make' in the root of the project to build 'P0'.
+The executable `P0` is built and placed in `/bin`.
 
-## Compiling
+At the same location in the project folders you can just run `./bin/P0`
+Or you can execute `cd ./bin` and then run `./P0`
 
-This project container is set to work correctly with the provided Makefile.  To compile, providing your files are in the necessary places (header files in the 'include' directory, etc.) simply typing ```make``` at the commandline will cause the project to compile.  Note that we use the g++ compiler as the default, though clang++ would work as well.
+**Run command structure**:
 
-## Included
+> In each case `[file]` will be read in 'word by word' (whitespaces separate what's read in).
 
-- A patch for `to_string()` on older compilers is in the `include` directory already -> `SSTR.hpp`.
+> `[file]` _must have the extension of_ `.sp2020`.
+> - for example `test1.sp2020`, `text.sp2020`, `whatever.sp2020`
+
+`./P0` 
+- read from the keyboard until simulated EOF (Command to type to simulate EOF -> *nix: ctrl+d, windows: ctrl+z)
+
+`./P0 < [file]`
+- redirect from `[file]` until EOF
+
+`./P0 [file]` or `./P0 [file].sp2020`
+- read from `[file].sp2020`
+
+`./P0 -h`
+- help
+
+---
+
+**What Works**:
+
+**What Doesn't Work**:
