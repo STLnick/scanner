@@ -7,7 +7,7 @@ OBJ_DIR := obj
 BIN_DIR := bin
 
 # Make sure to change the executable name to the current project!
-EXE := $(BIN_DIR)/P0
+EXE := $(BIN_DIR)/scanner
 SRC := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
@@ -31,6 +31,6 @@ $(BIN_DIR) $(OBJ_DIR):
 	mkdir -p $@
 
 clean:
-	@$(RM) -rv $(OBJ_DIR) $(BIN_DIR) *.inorder *.postorder *.preorder output.sp2020
+	@$(RM) -rv $(OBJ_DIR) $(BIN_DIR)
 
 -include $(OBJ:.o=.d)
