@@ -13,5 +13,5 @@ TokenRecord *initToken(std::string name, tokenID tokenId/*, int lineNum*/) {
 }
 
 void printToken(TokenRecord *token) {
-    std::cout << "[" << tokenNames[token->tokenId] << "] " << token->stringVal << std::endl;
+    std::cout << "[" << tokenNames[token->tokenId] << "] '" << token->stringVal << "'" << std::endl;
 }
