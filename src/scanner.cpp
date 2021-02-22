@@ -85,6 +85,10 @@ TokenRecord* getNextToken(Scanner *scanner) {
 
         // Else determine parse path with remaining tokens
         switch (scanner->c) {
+            case '=':
+                return advanceScannerWithCurrent(scanner, ASSIGN_tk);
+            case ';':
+                return advanceScannerWithCurrent(scanner, SEMI_tk);
             case '\0':
                 break; // Synonymous for the EOF Token
             default:

@@ -13,10 +13,10 @@
 
 // TODO: Make these TokenTypes the actual needed types
 enum tokenID {
-    ID_tk, NUM_tk, EOF_tk
+    ID_tk, NUM_tk, EOF_tk, ASSIGN_tk, SEMI_tk
 };
 const std::string tokenNames[] =
-        {"Identifier", "Number", "End Of File"};
+        {"Identifier", "Number", "End Of File", "Assignment Operator", "Semicolon"};
 
 typedef struct {
     tokenID tokenId;       // The token type
