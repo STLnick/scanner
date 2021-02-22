@@ -13,15 +13,6 @@
 
 int main(int argc, char **argv) {
 
-    /* ------------------------------------ */
-    // Testing a TOKEN
-    /* ------------------------------------ */
-    TokenRecord *myToken = initToken("NICK", ID_tk/*, 1*/);
-
-    std::cout << "Token: '" << myToken->stringVal << "'";
-    std::cout << " Type: '" << tokenNames[myToken->tokenId] << "'" << std::endl << std::endl;
-    //std::cout << " Line " << myToken->lineNum << "'" << std::endl << std::endl;
-
 
     /* ------------------------------------ */
     // Testing a SCANNER
@@ -69,7 +60,7 @@ int main(int argc, char **argv) {
     }
      */
 
-    // call getNextToken until the token returned is EOF_tk
+    // Get next token until we receive the EOF_tk
     while (1) {
         TokenRecord *token = getNextToken(scanner);
         printToken(token);
@@ -77,13 +68,11 @@ int main(int argc, char **argv) {
             break;
     }
 
-    // TODO: Manually log the EOF token
-
     /* ------------------------------------ */
     // Free memory
     /* ------------------------------------ */
-    free(myToken);
     free(scanner);
+
     srcFile.close();
 
     return 0;
