@@ -6,9 +6,12 @@
 #define SCANNER_HPP
 
 #include "ScannerStruct.hpp"
+#include "TokenRecord.hpp"
 
 void advanceScanner(Scanner *scanner);
 Scanner* initScanner(std::string &src);
 char lookahead(Scanner *scanner, int offset = 1);
+TokenRecord scannerParseNumber(Scanner *scanner);
+TokenRecord* getNextToken(Scanner *scanner);
 
 #endif //SCANNER_HPP
