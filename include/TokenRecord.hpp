@@ -9,10 +9,10 @@
 #include <string>
 
 /* Single char tokens */
-// = + - / * ( ) { } [ ] % . , ; : < >
+// = + - / * ( ) { } [ ] % . , ; :
 
 /* Double char tokens */
-// <= >= == != :=
+// == => := =<
 
 // TODO: Make these TokenTypes the actual needed types
 enum tokenID {
@@ -25,6 +25,16 @@ enum tokenID {
     MINUS_tk,
     MULT_tk,
     DIVIDE_tk,
+    MOD_tk,
+    DOT_tk,
+    COMMA_tk,
+    COLON_tk,
+    LPAREN_tk,
+    RPAREN_tk,
+    LBRACE_tk,
+    RBRACE_tk,
+    LBRACKET_tk,
+    RBRACKET_tk,
     EQ_tk,   // TODO
     GTEQ_tk, // TODO
     LTEQ_tk  // TODO
@@ -39,6 +49,16 @@ const std::string tokenNames[] = {
         "Subtraction",
         "Multiplication",
         "Division",
+        "Modulus",
+        "Dot",
+        "Comma",
+        "Colon",
+        "Left Parenthesis",
+        "Right Parenthesis",
+        "Left Brace",
+        "Right Brace",
+        "Left Bracket",
+        "Right Bracket",
         "Equality Operator",
         "Greater Than or Equal To Operator",
         "Less Than or Equal To Operator",

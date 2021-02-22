@@ -85,7 +85,7 @@ TokenRecord *getNextToken(Scanner *scanner) {
 
         // Else determine parse path with remaining tokens
         switch (scanner->c) {
-            case '=':
+            case '=': // TODO: use lookahead to determine what this token truly is (=, ==, =>, =<, :=)
                 return advanceScannerWithCurrent(scanner, ASSIGN_tk);
             case ';':
                 return advanceScannerWithCurrent(scanner, SEMI_tk);
@@ -97,6 +97,26 @@ TokenRecord *getNextToken(Scanner *scanner) {
                 return advanceScannerWithCurrent(scanner, MULT_tk);
             case '/':
                 return advanceScannerWithCurrent(scanner, DIVIDE_tk);
+            case '%':
+                return advanceScannerWithCurrent(scanner, MOD_tk);
+            case '.':
+                return advanceScannerWithCurrent(scanner, DOT_tk);
+            case ',':
+                return advanceScannerWithCurrent(scanner, COMMA_tk);
+            case ':':
+                return advanceScannerWithCurrent(scanner, COLON_tk);
+            case '(':
+                return advanceScannerWithCurrent(scanner, LPAREN_tk);
+            case ')':
+                return advanceScannerWithCurrent(scanner, RPAREN_tk);
+            case '{':
+                return advanceScannerWithCurrent(scanner, LBRACE_tk);
+            case '}':
+                return advanceScannerWithCurrent(scanner, RBRACE_tk);
+            case '[':
+                return advanceScannerWithCurrent(scanner, LBRACKET_tk);
+            case ']':
+                return advanceScannerWithCurrent(scanner, RBRACKET_tk);
             case '\0':
                 break; // Synonymous for the EOF Token
             default:
