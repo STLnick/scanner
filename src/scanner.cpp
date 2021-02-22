@@ -89,6 +89,14 @@ TokenRecord *getNextToken(Scanner *scanner) {
                 return advanceScannerWithCurrent(scanner, ASSIGN_tk);
             case ';':
                 return advanceScannerWithCurrent(scanner, SEMI_tk);
+            case '+':
+                return advanceScannerWithCurrent(scanner, PLUS_tk);
+            case '-':
+                return advanceScannerWithCurrent(scanner, MINUS_tk);
+            case '*':
+                return advanceScannerWithCurrent(scanner, MULT_tk);
+            case '/':
+                return advanceScannerWithCurrent(scanner, DIVIDE_tk);
             case '\0':
                 break; // Synonymous for the EOF Token
             default:

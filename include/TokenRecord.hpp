@@ -8,15 +8,41 @@
 
 #include <string>
 
-//   =     =>   =<  ==   : := + - * / % . ( ) , { } ; [ ]
-// assign gteq lteq eq 
+/* Single char tokens */
+// = + - / * ( ) { } [ ] % . , ; : < >
+
+/* Double char tokens */
+// <= >= == != :=
 
 // TODO: Make these TokenTypes the actual needed types
 enum tokenID {
-    ID_tk, NUM_tk, EOF_tk, ASSIGN_tk, SEMI_tk
+    ID_tk,
+    NUM_tk,
+    EOF_tk,
+    ASSIGN_tk,
+    SEMI_tk,
+    PLUS_tk,
+    MINUS_tk,
+    MULT_tk,
+    DIVIDE_tk,
+    EQ_tk,   // TODO
+    GTEQ_tk, // TODO
+    LTEQ_tk  // TODO
 };
-const std::string tokenNames[] =
-        {"Identifier", "Number", "End Of File", "Assignment Operator", "Semicolon"};
+const std::string tokenNames[] = {
+        "Identifier",
+        "Number",
+        "End Of File",
+        "Assignment Operator",
+        "Semicolon",
+        "Addition",
+        "Subtraction",
+        "Multiplication",
+        "Division",
+        "Equality Operator",
+        "Greater Than or Equal To Operator",
+        "Less Than or Equal To Operator",
+};
 
 typedef struct {
     tokenID tokenId;       // The token type
