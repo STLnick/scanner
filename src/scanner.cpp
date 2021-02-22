@@ -23,6 +23,18 @@ void advanceScanner(Scanner *scanner) {
         scanner->c = scanner->src->at(scanner->i);
 }
 
+TokenRecord* advanceScannerWith(Scanner *scanner, TokenRecord *token) {
+    advanceScanner(scanner);
+    return token;
+}
+
+TokenRecord* advanceScannerWithCurrent(Scanner *scanner, tokenID type) {
+    std::string str(1, scanner->c);
+    TokenRecord *token = initToken(str, type);
+    advanceScanner(scanner);
+    return token;
+}
+
 char lookahead(Scanner *scanner, int offset = 1) {
     int index = scanner->i + offset < scanner->src->length()
                 ? scanner->i + offset
