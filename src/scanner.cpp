@@ -36,6 +36,18 @@ void skipWhitespace(Scanner *scanner) {
     while (scanner->c == 13 || scanner->c == 10 || scanner->c == ' ' || scanner->c == '\t')
         advanceScanner(scanner);
 }
+
+TokenRecord* scannerParseId(Scanner *scanner) {
+    std::string value;
+
+    while (isalpha(scanner->c)) {
+        value += scanner->c;
+        advanceScanner(scanner);
+    }
+
+    return initToken(value, ID_tk);
+}
+
 TokenRecord* scannerParseNumber(Scanner *scanner) {
     std::string value;
 
@@ -52,8 +64,8 @@ TokenRecord* getNextToken(Scanner *scanner) {
         skipWhitespace(scanner);
 
         // TODO: If we get an alpha character then parse as an Identifier
-        //if (isalpha(scanner->c))
-        //    return scannerParseId(scanner);
+        if (isalpha(scanner->c))
+            return scannerParseId(scanner);
 
         // TODO: If we get a digit then parse as a number
         if (isdigit(scanner->c))

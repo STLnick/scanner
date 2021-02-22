@@ -11,7 +11,8 @@
 void advanceScanner(Scanner *scanner);
 Scanner* initScanner(std::string &src);
 char lookahead(Scanner *scanner, int offset = 1);
-TokenRecord scannerParseNumber(Scanner *scanner);
+TokenRecord* scannerParseId(Scanner *scanner);
+TokenRecord* scannerParseNumber(Scanner *scanner);
 TokenRecord* getNextToken(Scanner *scanner);
 
 #endif //SCANNER_HPP
