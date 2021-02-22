@@ -35,9 +35,9 @@ enum tokenID {
     RBRACE_tk,
     LBRACKET_tk,
     RBRACKET_tk,
-    EQ_tk,   // TODO
-    GTEQ_tk, // TODO
-    LTEQ_tk,  // TODO
+    EQ_tk,
+    GTEQ_tk,
+    LTEQ_tk,
     COLONEQ_tk
 };
 const std::string tokenNames[] = {

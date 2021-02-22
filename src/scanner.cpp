@@ -84,9 +84,20 @@ TokenRecord *getNextToken(Scanner *scanner) {
             return scannerParseNumber(scanner);
 
         // Else determine parse path with remaining tokens
+        // NOTE: Any double character operator has nested advances to advance scanner past the two chars after lookahead
         switch (scanner->c) {
-            case '=': // TODO: use lookahead to determine what this token truly is (=, ==, =>, =<, :=)
+            case '=': {
+                switch (lookahead(scanner)) {
+                    case '=':
+                        return advanceScannerWith(scanner, advanceScannerWith(scanner, initToken("==", EQ_tk)));
+                    case '>':
+                        return advanceScannerWith(scanner, advanceScannerWith(scanner, initToken("=>", GTEQ_tk)));
+                    case '<':
+                        return advanceScannerWith(scanner, advanceScannerWith(scanner, initToken("=<", LTEQ_tk)));
+                }
                 return advanceScannerWithCurrent(scanner, ASSIGN_tk);
+            }
+                break;
             case ';':
                 return advanceScannerWithCurrent(scanner, SEMI_tk);
             case '+':
@@ -104,6 +115,9 @@ TokenRecord *getNextToken(Scanner *scanner) {
             case ',':
                 return advanceScannerWithCurrent(scanner, COMMA_tk);
             case ':':
+                if (lookahead(scanner) == '=') {
+                    return advanceScannerWith(scanner, advanceScannerWith(scanner, initToken(":=", COLONEQ_tk)));
+                }
                 return advanceScannerWithCurrent(scanner, COLON_tk);
             case '(':
                 return advanceScannerWithCurrent(scanner, LPAREN_tk);
