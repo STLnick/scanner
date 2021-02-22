@@ -37,7 +37,8 @@ enum tokenID {
     RBRACKET_tk,
     EQ_tk,   // TODO
     GTEQ_tk, // TODO
-    LTEQ_tk  // TODO
+    LTEQ_tk,  // TODO
+    COLONEQ_tk
 };
 const std::string tokenNames[] = {
         "Identifier",
@@ -62,6 +63,7 @@ const std::string tokenNames[] = {
         "Equality Operator",
         "Greater Than or Equal To Operator",
         "Less Than or Equal To Operator",
+        "Colon Equals Operator"
 };
 
 typedef struct {
