@@ -92,7 +92,7 @@ TokenRecord *getNextToken(Scanner *scanner) {
             case '\0':
                 break; // Synonymous for the EOF Token
             default:
-                std::cout << "[Scanner]: Unexpected character `" << scanner->c << "` (" << (int) scanner->c << ")"
+                std::cout << "SCANNER ERROR: Unexpected character `" << scanner->c << "` (" << (int) scanner->c << ")"
                           << std::endl;
                 exit(1);
         }
