@@ -16,3 +16,12 @@ void advanceScanner(Scanner *scanner) {
     if (scanner->i != scanner->src->length())
         scanner->c = scanner->src->at(scanner->i);
 }
+
+char lookahead(Scanner *scanner, int offset = 1) {
+    int index = scanner->i + offset < scanner->src->length()
+                ? scanner->i + offset
+                : scanner->src->length();
+    return index < scanner->src->length()
+           ? scanner->src->at(index)
+           : scanner->src->at(scanner->src->length() - 1);
+}

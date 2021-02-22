@@ -9,5 +9,6 @@
 
 void advanceScanner(Scanner *scanner);
 Scanner* initScanner(std::string &src);
+char lookahead(Scanner *scanner, int offset = 1);
 
 #endif //SCANNER_HPP
