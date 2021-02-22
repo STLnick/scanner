@@ -3,13 +3,18 @@
  * 2/15/21
  * scanner
  */
+#include <fstream>
+#include <istream>
 #include <iostream>
+#include "scanner.hpp"
 #include "TokenRecord.hpp"
 #include "token.hpp"
 
-int main() {
+int main(int argc, char **argv) {
 
-    // TODO: basic setup here of calling a function to init a token and storing it
+    /* ------------------------------------ */
+    // Testing a TOKEN
+    /* ------------------------------------ */
     TokenRecord *myToken = initToken("NICK", ID_tk, 1);
 
     std::cout << "Token: '" << myToken->stringVal << "'";
@@ -28,6 +33,31 @@ int main() {
     std::ifstream srcFile("../test.fs");
 
     Scanner *scanner = initScanner(srcFile);
+
+    int lineCnt = 0;
+    int prevLineCnt = 0;
+
+    std::cout << "[" << lineCnt + 1 << "]: " << scanner->c;
+    advanceScanner(scanner);
+
+    while (!scanner->src->eof()) {
+        // Print the line number on a new line from the src file
+        if (lineCnt != prevLineCnt) {
+            std::cout << "[" << lineCnt + 1 << "]: ";
+            prevLineCnt += 1;
+        }
+
+
+        if (scanner->c == '\n')
+            lineCnt += 1;
+
+        std::cout << scanner->c;
+
+        advanceScanner(scanner);
+    }
+
+    // TODO: Manually log the EOF token
+
     /* ------------------------------------ */
     // Free memory
     /* ------------------------------------ */
