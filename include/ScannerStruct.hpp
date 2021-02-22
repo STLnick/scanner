@@ -5,12 +5,12 @@
 #ifndef SCANNER_STRUCT_HPP
 #define SCANNER_STRUCT_HPP
 
-#include <fstream>
+#include <string>
 
 typedef struct {
-    std::ifstream *src; // String created from source code
-    char c;             // Current character
-    unsigned int i;     // Current index
+    std::string *src; // String created from source code
+    char c;           // Current character
+    unsigned int i;   // Current index
 } Scanner;
 
 #endif //SCANNER_STRUCT_HPP

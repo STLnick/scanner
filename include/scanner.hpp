@@ -7,7 +7,7 @@
 
 #include "ScannerStruct.hpp"
 
-Scanner* initScanner(std::ifstream &src);
 void advanceScanner(Scanner *scanner);
+Scanner* initScanner(std::string &src);
 
 #endif //SCANNER_HPP

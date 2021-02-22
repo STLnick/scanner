@@ -9,6 +9,7 @@
 #include "scanner.hpp"
 #include "TokenRecord.hpp"
 #include "token.hpp"
+#include "utils.hpp"
 
 int main(int argc, char **argv) {
 
@@ -32,11 +33,12 @@ int main(int argc, char **argv) {
     // Setup a file stream to assign src in scanner
     std::ifstream srcFile("../test.fs");
 
-    Scanner *scanner = initScanner(srcFile);
+    std::string srcString;
 
-    int lineCnt = 0;
+    readSrcIntoString(srcFile, srcString);
     int prevLineCnt = 0;
 
+    Scanner *scanner = initScanner(srcString);
     std::cout << "[" << lineCnt + 1 << "]: " << scanner->c;
     advanceScanner(scanner);
 
@@ -62,7 +64,6 @@ int main(int argc, char **argv) {
     // Free memory
     /* ------------------------------------ */
     free(myToken);
-    scanner->src = nullptr;
     free(scanner);
     srcFile.close();
 
