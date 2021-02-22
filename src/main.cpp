@@ -16,11 +16,11 @@ int main(int argc, char **argv) {
     /* ------------------------------------ */
     // Testing a TOKEN
     /* ------------------------------------ */
-    TokenRecord *myToken = initToken("NICK", ID_tk, 1);
+    TokenRecord *myToken = initToken("NICK", ID_tk/*, 1*/);
 
     std::cout << "Token: '" << myToken->stringVal << "'";
-    std::cout << " Type: '" << tokenNames[myToken->tokenId] << "'";
-    std::cout << " Line " << myToken->lineNum << "'" << std::endl << std::endl;
+    std::cout << " Type: '" << tokenNames[myToken->tokenId] << "'" << std::endl << std::endl;
+    //std::cout << " Line " << myToken->lineNum << "'" << std::endl << std::endl;
 
 
     /* ------------------------------------ */
