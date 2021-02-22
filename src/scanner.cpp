@@ -32,6 +32,10 @@ char lookahead(Scanner *scanner, int offset = 1) {
            : scanner->src->at(scanner->src->length() - 1);
 }
 
+void skipWhitespace(Scanner *scanner) {
+    while (scanner->c == 13 || scanner->c == 10 || scanner->c == ' ' || scanner->c == '\t')
+        advanceScanner(scanner);
+}
 TokenRecord* scannerParseNumber(Scanner *scanner) {
     std::string value;
 
@@ -45,6 +49,8 @@ TokenRecord* scannerParseNumber(Scanner *scanner) {
 
 TokenRecord* getNextToken(Scanner *scanner) {
     while (scanner->c != '\0') {
+        skipWhitespace(scanner);
+
         // TODO: If we get an alpha character then parse as an Identifier
         //if (isalpha(scanner->c))
         //    return scannerParseId(scanner);
