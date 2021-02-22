@@ -8,5 +8,6 @@
 #include "ScannerStruct.hpp"
 
 Scanner* initScanner(std::ifstream &src);
+void advanceScanner(Scanner *scanner);
 
 #endif //SCANNER_HPP

@@ -10,3 +10,8 @@ Scanner *initScanner(std::ifstream &src) {
 
     return scanner;
 }
+
+void advanceScanner(Scanner *scanner) {
+    scanner->i += 1;
+    scanner->src->get(scanner->c);
+}
