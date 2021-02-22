@@ -5,6 +5,8 @@
 #ifndef SCANNER_HPP
 #define SCANNER_HPP
 
+#include "ScannerStruct.hpp"
 
+Scanner* initScanner(std::ifstream &src);
 
 #endif //SCANNER_HPP
