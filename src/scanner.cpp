@@ -23,12 +23,12 @@ void advanceScanner(Scanner *scanner) {
         scanner->c = scanner->src->at(scanner->i);
 }
 
-TokenRecord* advanceScannerWith(Scanner *scanner, TokenRecord *token) {
+TokenRecord *advanceScannerWith(Scanner *scanner, TokenRecord *token) {
     advanceScanner(scanner);
     return token;
 }
 
-TokenRecord* advanceScannerWithCurrent(Scanner *scanner, tokenID type) {
+TokenRecord *advanceScannerWithCurrent(Scanner *scanner, tokenID type) {
     std::string str(1, scanner->c);
     TokenRecord *token = initToken(str, type);
     advanceScanner(scanner);
@@ -49,7 +49,7 @@ void skipWhitespace(Scanner *scanner) {
         advanceScanner(scanner);
 }
 
-TokenRecord* scannerParseId(Scanner *scanner) {
+TokenRecord *scannerParseId(Scanner *scanner) {
     std::string value;
 
     while (isalpha(scanner->c)) {
@@ -60,7 +60,7 @@ TokenRecord* scannerParseId(Scanner *scanner) {
     return initToken(value, ID_tk);
 }
 
-TokenRecord* scannerParseNumber(Scanner *scanner) {
+TokenRecord *scannerParseNumber(Scanner *scanner) {
     std::string value;
 
     while (isdigit(scanner->c)) {
@@ -71,15 +71,15 @@ TokenRecord* scannerParseNumber(Scanner *scanner) {
     return initToken(value, NUM_tk);
 }
 
-TokenRecord* getNextToken(Scanner *scanner) {
+TokenRecord *getNextToken(Scanner *scanner) {
     while (scanner->c != '\0') {
         skipWhitespace(scanner);
 
-        // TODO: If we get an alpha character then parse as an Identifier
+        // If we get an alpha character then parse as an Identifier
         if (isalpha(scanner->c))
             return scannerParseId(scanner);
 
-        // TODO: If we get a digit then parse as a number
+        // If we get a digit then parse as a Number
         if (isdigit(scanner->c))
             return scannerParseNumber(scanner);
 
