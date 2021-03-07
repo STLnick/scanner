@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string>
 #include "ScannerStruct.hpp"
+#include "Table.hpp"
 #include "token.hpp"
 #include "TokenRecord.hpp"
 
@@ -133,9 +134,94 @@ TokenRecord *getKeywordToken(std::string str) {
 }
 
 TokenRecord *getNextToken(Scanner *scanner) {
+    State nextState;
+    State state = INITIAL;
+    State tempState;
+    std::string str;
+    int isInComment = 0;
+    int transition;
+
+    while (state != FINAL) {
+        transition = getTransitionFromChar(scanner->c, state);
+        nextState = Table[state][transition];
+
+        // Handle errors
+        if (nextState == ERROR) {
+            std::cout << "SCANNER ERROR: Unexpected character `" << scanner->c << "` (" << (int) scanner->c << ")"
+                      << std::endl;
+            exit(1);
+        }
+
+        if (nextState == FINAL) {
+            // determine token type
+            switch (state) {
+                case ASSIGNOP:
+                    return initToken(str, ASSIGNOP_tk);
+                case GTEQ:
+                    return initToken(str, GTEQ_tk);
+                case EQ:
+                    return initToken(str, EQ_tk);
+                case COLONEQ:
+                    return initToken(str, COLONEQ_tk);
+                case LTEQ:
+                    return initToken(str, LTEQ_tk);
+                case ID:
                     if (isKeyword(str)) {
                         return getKeywordToken(str);
                     }
+                    return initToken(str, ID_tk);
+                case NUM:
+                    return initToken(str, NUM_tk);
+                case EOF_:
+                    return initToken(str, EOF_tk);
+                case SEMI:
+                    return initToken(str, SEMI_tk);
+                case PLUS:
+                    return initToken(str, PLUS_tk);
+                case MINUS:
+                    return initToken(str, MINUS_tk);
+                case MULT:
+                    return initToken(str, MULT_tk);
+                case DIVIDE:
+                    return initToken(str, DIVIDE_tk);
+                case MOD:
+                    return initToken(str, MOD_tk);
+                case DOT:
+                    return initToken(str, DOT_tk);
+                case COMMA:
+                    return initToken(str, COMMA_tk);
+                case COLON:
+                    return initToken(str, COLON_tk);
+                case LPAREN:
+                    return initToken(str, LPAREN_tk);
+                case RPAREN:
+                    return initToken(str, RPAREN_tk);
+                case LBRACE:
+                    return initToken(str, LBRACE_tk);
+                case RBRACE:
+                    return initToken(str, RBRACE_tk);
+                case LBRACKET:
+                    return initToken(str, LBRACKET_tk);
+                case RBRACKET:
+                    return initToken(str, RBRACKET_tk);
+            }
+        } else if (nextState == CMT_ST_A) {
+            tempState = state; // save the current state when comment started
+            state = nextState;
+            advanceScanner(scanner);
+        } else if (nextState == CMT_ST_B || nextState == CMT_END_A || nextState == CMT_END_B) {
+            state = nextState == CMT_END_B ? tempState : nextState;
+            advanceScanner(scanner);
+        } else {
+            state = nextState;
+            if (!isspace(scanner->c)) {
+                str += scanner->c;
+            }
+            advanceScanner(scanner);
+        }
+    }
+}
+
     while (scanner->c != '\0') {
         skipWhitespace(scanner);
         skipComments(scanner);
