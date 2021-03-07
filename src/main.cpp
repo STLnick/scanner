@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
         case -1:
             std::cout << "Invalid Usage - Terminating" << std::endl;
             return -1;
-        case 1:
+        case 1: // Help flag was used, gracefully exit
             return 0;
     }
 
