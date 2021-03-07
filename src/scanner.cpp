@@ -106,7 +106,36 @@ TokenRecord *scannerParseNumber(Scanner *scanner) {
     return initToken(value, NUM_tk);
 }
 
+int isKeyword(std::string str) {
+    for (int i = 0; i < 14; i++) {
+        if (str == keywords[i]) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+TokenRecord *getKeywordToken(std::string str) {
+    if (str == "begin")  return initToken(str, BEGIN_tk);
+    if (str == "end")    return initToken(str, END_tk);
+    if (str == "loop")   return initToken(str, LOOP_tk);
+    if (str == "whole")  return initToken(str, WHOLE_tk);
+    if (str == "void")   return initToken(str, VOID_tk);
+    if (str == "exit")   return initToken(str, EXIT_tk);
+    if (str == "getter") return initToken(str, GETTER_tk);
+    if (str == "outter") return initToken(str, OUTTER_tk);
+    if (str == "main")   return initToken(str, MAIN_tk);
+    if (str == "if")     return initToken(str, IF_tk);
+    if (str == "then")   return initToken(str, THEN_tk);
+    if (str == "assign") return initToken(str, ASSIGN_tk);
+    if (str == "data")   return initToken(str, DATA_tk);
+    if (str == "proc")   return initToken(str, PROC_tk);
+}
+
 TokenRecord *getNextToken(Scanner *scanner) {
+                    if (isKeyword(str)) {
+                        return getKeywordToken(str);
+                    }
     while (scanner->c != '\0') {
         skipWhitespace(scanner);
         skipComments(scanner);

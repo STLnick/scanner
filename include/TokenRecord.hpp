@@ -93,6 +93,22 @@ const std::string tokenNames[] = {
         "Data Keyword",
         "Proc Keyword"
 };
+const std::string keywords[] = {
+        "begin",
+        "end",
+        "loop",
+        "whole",
+        "void",
+        "exit",
+        "getter",
+        "outter",
+        "main",
+        "if",
+        "then",
+        "assign",
+        "data",
+        "proc"
+};
 
 typedef struct {
     tokenID tokenId;       // The token type
