@@ -12,8 +12,9 @@
 #include "token.hpp"
 #include "utils.hpp"
 
+void init(int argc, char **argv, std::string &fileNameToRead);
+
 int main(int argc, char **argv) {
-    std::string buffer;
     std::string fileNameToRead;
 
     // Parse Command Line Options
@@ -25,6 +26,58 @@ int main(int argc, char **argv) {
             return 0;
     }
 
+    init(argc, argv, fileNameToRead);
+
+    // Setup a file stream to assign src in scanner
+    std::ifstream srcFile(fileNameToRead + ".fs");
+    std::string srcString;
+    readSrcIntoString(srcFile, srcString);
+
+    Scanner *scanner = initScanner(srcString);
+
+    /*
+    int colNum = 0; // TODO: fully implement
+    int lineCnt = 0; // TODO: fully implement - will need too add lineNum back onto TokenRecord
+    int prevLineCnt = 0;
+    std::cout << "[" << lineCnt + 1 << "]: " << scanner->c;
+    advanceScanner(scanner);
+
+    for (int i = scanner->i; i < scanner->src->length(); i++) {
+        // Print the line number on a new line from the src file
+        if (lineCnt != prevLineCnt) {
+            std::cout << "[" << lineCnt + 1 << "]: ";
+            prevLineCnt++;
+        }
+
+        if (scanner->c == '\n') {
+            colNum = 0;
+            lineCnt++;
+        } else {
+            colNum++;
+        }
+
+     */
+
+    // TODO: break this out into 'testing driver' or something like that...
+    // Get next token until we receive the EOF_tk
+    while (1) {
+        TokenRecord *token = getNextToken(scanner);
+        printToken(token);
+        if (token->tokenId == EOF_tk)
+            break;
+    }
+
+    /* ------------------------------------ */
+    // Free memory
+    /* ------------------------------------ */
+    free(scanner);
+    srcFile.close();
+
+    return 0;
+}
+
+void init(int argc, char **argv, std::string &fileNameToRead) {
+    std::string buffer;
     // Read in input if needed and set the filename to be read depending on arguments
     /*  ./scanner or ./scanner < filename  */
     if (argc == 1) {
@@ -35,7 +88,7 @@ int main(int argc, char **argv) {
         }
         catch (int e) {
             std::cerr << "Failed to open the temp file for writing!" << std::endl;
-            return -1;
+            exit(1);
         }
 
         std::cout
@@ -66,7 +119,7 @@ int main(int argc, char **argv) {
 
             if (fileExt.compare(".fs") != 0) {
                 std::cerr << "Incorrect file type provided - must use file extension '.fs'" << std::endl;
-                return -1;
+                exit(1);
             }
 
             fileNameToRead.erase(dotIndex, std::string::npos);
@@ -74,55 +127,6 @@ int main(int argc, char **argv) {
     } else {
         std::cout << "Incorrect invocation of program! Try again or execute './P0 -h' to view the help info"
                   << std::endl;
-        return -1;
+        exit(1);
     }
-
-    // Setup a file stream to assign src in scanner
-    std::ifstream srcFile(fileNameToRead + ".fs");
-
-    std::string srcString;
-
-    readSrcIntoString(srcFile, srcString);
-
-    Scanner *scanner = initScanner(srcString);
-
-    /*
-    int colNum = 0; // TODO: fully implement
-    int lineCnt = 0; // TODO: fully implement - will need too add lineNum back onto TokenRecord
-    int prevLineCnt = 0;
-    std::cout << "[" << lineCnt + 1 << "]: " << scanner->c;
-    advanceScanner(scanner);
-
-    for (int i = scanner->i; i < scanner->src->length(); i++) {
-        // Print the line number on a new line from the src file
-        if (lineCnt != prevLineCnt) {
-            std::cout << "[" << lineCnt + 1 << "]: ";
-            prevLineCnt++;
-        }
-
-        if (scanner->c == '\n') {
-            colNum = 0;
-            lineCnt++;
-        } else {
-            colNum++;
-        }
-
-     */
-
-    // Get next token until we receive the EOF_tk
-    while (1) {
-        TokenRecord *token = getNextToken(scanner);
-        printToken(token);
-        if (token->tokenId == EOF_tk)
-            break;
-    }
-
-    /* ------------------------------------ */
-    // Free memory
-    /* ------------------------------------ */
-    free(scanner);
-
-    srcFile.close();
-
-    return 0;
 }
