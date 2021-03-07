@@ -93,6 +93,21 @@ TokenRecord *getNextToken(Scanner *scanner) {
         skipWhitespace(scanner);
 
         // TODO: Skip comments!
+        if (scanner->c == '$' && lookahead(scanner) == '$') {
+                // Advance past the initial '$$' to properly identify the second set of '$$'
+            advanceScanner(scanner);
+            advanceScanner(scanner);
+
+            while (1) {
+                if (scanner->c == '$' && lookahead(scanner) == '$') {
+                    advanceScanner(scanner);
+                    advanceScanner(scanner);
+                    break;
+                }
+                advanceScanner(scanner);
+            }
+            skipWhitespace(scanner);
+        }
 
         // If we get an alpha character then parse as an Identifier/Keyword
         if (isalpha(scanner->c))
