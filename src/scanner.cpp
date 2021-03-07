@@ -49,6 +49,24 @@ void skipWhitespace(Scanner *scanner) {
         advanceScanner(scanner);
 }
 
+void skipComments(Scanner *scanner) {
+    if (scanner->c == '$' && lookahead(scanner) == '$') {
+        // Advance past the initial '$$' to properly identify the second set of '$$'
+        advanceScanner(scanner);
+        advanceScanner(scanner);
+
+        while (1) {
+            if (scanner->c == '$' && lookahead(scanner) == '$') {
+                advanceScanner(scanner);
+                advanceScanner(scanner);
+                break;
+            }
+            advanceScanner(scanner);
+        }
+        skipWhitespace(scanner);
+    }
+}
+
 TokenRecord *scannerParseIdOrKeyword(Scanner *scanner) {
     std::string value;
 
@@ -91,23 +109,7 @@ TokenRecord *scannerParseNumber(Scanner *scanner) {
 TokenRecord *getNextToken(Scanner *scanner) {
     while (scanner->c != '\0') {
         skipWhitespace(scanner);
-
-        // TODO: Skip comments!
-        if (scanner->c == '$' && lookahead(scanner) == '$') {
-                // Advance past the initial '$$' to properly identify the second set of '$$'
-            advanceScanner(scanner);
-            advanceScanner(scanner);
-
-            while (1) {
-                if (scanner->c == '$' && lookahead(scanner) == '$') {
-                    advanceScanner(scanner);
-                    advanceScanner(scanner);
-                    break;
-                }
-                advanceScanner(scanner);
-            }
-            skipWhitespace(scanner);
-        }
+        skipComments(scanner);
 
         // If we get an alpha character then parse as an Identifier/Keyword
         if (isalpha(scanner->c))
