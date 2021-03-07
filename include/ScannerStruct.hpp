@@ -2,8 +2,8 @@
 // Created by Nick Ray on 2/21/21.
 //
 
-#ifndef SCANNER_STRUCT_HPP
-#define SCANNER_STRUCT_HPP
+#ifndef SCANNER_SCANNER_STRUCT_HPP
+#define SCANNER_SCANNER_STRUCT_HPP
 
 #include <string>
 
@@ -13,4 +13,4 @@ typedef struct {
     unsigned int i;   // Current index
 } Scanner;
 
-#endif //SCANNER_STRUCT_HPP
+#endif //SCANNER_SCANNER_STRUCT_HPP

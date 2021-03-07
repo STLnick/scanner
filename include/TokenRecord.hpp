@@ -3,8 +3,8 @@
  * 2/15/21
  */
 
-#ifndef TOKEN_RECORD_HPP
-#define TOKEN_RECORD_HPP
+#ifndef SCANNER_TOKEN_RECORD_HPP
+#define SCANNER_TOKEN_RECORD_HPP
 
 #include <string>
 
@@ -100,4 +100,4 @@ typedef struct {
     //int lineNum;           // Line number which the token is on in source
 } TokenRecord;
 
-#endif /* TOKEN_RECORD_HPP */
+#endif /* SCANNER_TOKEN_RECORD_HPP */

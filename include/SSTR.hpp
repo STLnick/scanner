@@ -8,12 +8,12 @@
  *
  */
 
-#ifndef SSTR_HPP
-#define SSTR_HPP
+#ifndef SCANNER_SSTR_HPP
+#define SCANNER_SSTR_HPP
 
 #include <sstream>
 
 #define SSTR(x) static_cast< std::ostringstream & >( \
         ( std::ostringstream() << std::dec << x ) ).str()
 
-#endif // !SSTR_HPP
+#endif // !SCANNER_SSTR_HPP
