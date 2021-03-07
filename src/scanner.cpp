@@ -120,7 +120,8 @@ TokenRecord *getNextToken(Scanner *scanner, int &lineCnt) {
 
         // Handle errors
         if (nextState == ERROR) {
-            std::cout << "SCANNER ERROR: Unexpected character `" << scanner->c << "` (" << (int) scanner->c << ")" << std::endl;
+            std::cout << "SCANNER ERROR: Unexpected character `" << scanner->c << "` (" << (int) scanner->c << ")"
+                      << std::endl;
             exit(1);
         }
 

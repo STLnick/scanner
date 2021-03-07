@@ -26,6 +26,7 @@ int main(int argc, char **argv) {
             return 0;
     }
 
+    // Setup / validate file to read from using keyboard input, input redirection or command line argument
     init(argc, argv, fileNameToRead);
 
     // Setup a file stream to assign src in scanner
@@ -33,33 +34,13 @@ int main(int argc, char **argv) {
     std::string srcString;
     readSrcIntoString(srcFile, srcString);
 
+    // Initialize the Scanner
     Scanner *scanner = initScanner(srcString);
 
-    /*
-    int colNum = 0; // TODO: fully implement
-    int lineCnt = 0; // TODO: fully implement - will need too add lineNum back onto TokenRecord
-    int prevLineCnt = 0;
-    std::cout << "[" << lineCnt + 1 << "]: " << scanner->c;
-    advanceScanner(scanner);
 
-    for (int i = scanner->i; i < scanner->src->length(); i++) {
-        // Print the line number on a new line from the src file
-        if (lineCnt != prevLineCnt) {
-            std::cout << "[" << lineCnt + 1 << "]: ";
-            prevLineCnt++;
-        }
-
-        if (scanner->c == '\n') {
-            colNum = 0;
-            lineCnt++;
-        } else {
-            colNum++;
-        }
-
-     */
-
-    // TODO: break this out into 'testing driver' or something like that...
-    // Get next token until we receive the EOF_tk
+    /* ------------------------------------ */
+    // Test Scanner
+    /* ------------------------------------ */
     while (1) {
         TokenRecord *token = getNextToken(scanner, lineCnt);
         printToken(token);
