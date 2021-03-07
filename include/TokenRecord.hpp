@@ -19,7 +19,7 @@ enum tokenID {
     ID_tk,
     NUM_tk,
     EOF_tk,
-    ASSIGN_tk,
+    ASSIGNOP_tk,
     SEMI_tk,
     PLUS_tk,
     MINUS_tk,
@@ -38,7 +38,21 @@ enum tokenID {
     EQ_tk,
     GTEQ_tk,
     LTEQ_tk,
-    COLONEQ_tk
+    COLONEQ_tk,
+    BEGIN_tk,
+    END_tk,
+    LOOP_tk,
+    WHOLE_tk,
+    VOID_tk,
+    EXIT_tk,
+    GETTER_tk,
+    OUTTER_tk,
+    MAIN_tk,
+    IF_tk,
+    THEN_tk,
+    ASSIGN_tk,
+    DATA_tk,
+    PROC_tk,
 };
 const std::string tokenNames[] = {
         "Identifier",
@@ -63,7 +77,21 @@ const std::string tokenNames[] = {
         "Equality Operator",
         "Greater Than or Equal To Operator",
         "Less Than or Equal To Operator",
-        "Colon Equals Operator"
+        "Colon Equals Operator",
+        "Begin",
+        "End",
+        "Loop",
+        "Whole",
+        "Void",
+        "Exit",
+        "Getter",
+        "Outter",
+        "Main",
+        "If",
+        "Then",
+        "Assign",
+        "Data",
+        "Proc"
 };
 
 typedef struct {

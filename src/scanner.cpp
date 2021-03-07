@@ -49,7 +49,7 @@ void skipWhitespace(Scanner *scanner) {
         advanceScanner(scanner);
 }
 
-TokenRecord *scannerParseId(Scanner *scanner) {
+TokenRecord *scannerParseIdOrKeyword(Scanner *scanner) {
     std::string value;
 
     while (isalpha(scanner->c)) {
@@ -57,6 +57,23 @@ TokenRecord *scannerParseId(Scanner *scanner) {
         advanceScanner(scanner);
     }
 
+    // Determine if value is a keyword
+    if (value == "begin")  return initToken(value, BEGIN_tk);
+    if (value == "end")    return initToken(value, END_tk);
+    if (value == "loop")   return initToken(value, LOOP_tk);
+    if (value == "whole")  return initToken(value, WHOLE_tk);
+    if (value == "void")   return initToken(value, VOID_tk);
+    if (value == "exit")   return initToken(value, EXIT_tk);
+    if (value == "getter") return initToken(value, GETTER_tk);
+    if (value == "outter") return initToken(value, OUTTER_tk);
+    if (value == "main")   return initToken(value, MAIN_tk);
+    if (value == "if")     return initToken(value, IF_tk);
+    if (value == "then")   return initToken(value, THEN_tk);
+    if (value == "assign") return initToken(value, ASSIGN_tk);
+    if (value == "data")   return initToken(value, DATA_tk);
+    if (value == "proc")   return initToken(value, PROC_tk);
+
+    // Return as an identifier token if not found as a keyword
     return initToken(value, ID_tk);
 }
 
@@ -75,9 +92,11 @@ TokenRecord *getNextToken(Scanner *scanner) {
     while (scanner->c != '\0') {
         skipWhitespace(scanner);
 
-        // If we get an alpha character then parse as an Identifier
+        // TODO: Skip comments!
+
+        // If we get an alpha character then parse as an Identifier/Keyword
         if (isalpha(scanner->c))
-            return scannerParseId(scanner);
+            return scannerParseIdOrKeyword(scanner);
 
         // If we get a digit then parse as a Number
         if (isdigit(scanner->c))
@@ -95,7 +114,7 @@ TokenRecord *getNextToken(Scanner *scanner) {
                     case '<':
                         return advanceScannerWith(scanner, advanceScannerWith(scanner, initToken("=<", LTEQ_tk)));
                 }
-                return advanceScannerWithCurrent(scanner, ASSIGN_tk);
+                return advanceScannerWithCurrent(scanner, ASSIGNOP_tk);
             }
                 break;
             case ';':
