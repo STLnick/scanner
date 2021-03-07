@@ -17,6 +17,7 @@ void showHelp()
             << "         then the file must be of extension '.fs'." << std::endl
             << "         More specifically, if you specify an extension it MUST BE '.fs'" << std::endl
             << "         and if no file extension is specified then scanner will look for [ _file_ ].fs" << std::endl
+            << "         Also, the files being provided must be in the same directory as the executable."
             << std::endl
             << "Examples of valid invocations:" << std::endl
             << "\t./scanner test3.fs" << std::endl

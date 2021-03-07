@@ -13,6 +13,8 @@
 #include "utils.hpp"
 
 int main(int argc, char **argv) {
+    std::string buffer;
+    std::string fileNameToRead;
 
     // Parse Command Line Options
     switch (parseCommandLineOpts(argc, argv)) {
@@ -23,11 +25,60 @@ int main(int argc, char **argv) {
             return 0;
     }
 
-    // TODO: open the file based on the arguments provided to the program
-    // TODO: file extenstion checks, etc. GET CODE FROM P0 for CL ARGS PARSING!
+    // Read in input if needed and set the filename to be read depending on arguments
+    /*  ./scanner or ./scanner < filename  */
+    if (argc == 1) {
+        std::ofstream tempFile;
+        // Open temp file to hold user input or redirected file input
+        try {
+            tempFile.open("output.fs");
+        }
+        catch (int e) {
+            std::cerr << "Failed to open the temp file for writing!" << std::endl;
+            return -1;
+        }
+
+        std::cout
+                << "Preparing to read in input (if using keyboard type "
+                   "'ctrl + d' on *nix systems and 'ctrl + z' for Windows to finish)"
+                << std::endl;
+
+        // While there is input from user/file write it to new file
+        try {
+            while (std::cin >> buffer) {
+                tempFile << buffer << std::endl;
+            }
+        } catch (int e) {
+            std::cerr << "Error while reading from buffer and writing to file!" << std::endl;
+        }
+
+        tempFile.close();
+
+        fileNameToRead = "output";
+        /*  ./scanner filename  */
+    } else if (argc == 2) {
+        fileNameToRead = argv[1];
+        int dotIndex = fileNameToRead.find('.');
+
+        // IF this filename has a '.' -> make sure the extension is fs and just store filename no extension
+        if (dotIndex != -1) {
+            std::string fileExt = fileNameToRead.substr(dotIndex);
+
+            if (fileExt.compare(".fs") != 0) {
+                std::cerr << "Incorrect file type provided - must use file extension '.fs'" << std::endl;
+                return -1;
+            }
+
+            fileNameToRead.erase(dotIndex, std::string::npos);
+        }
+    } else {
+        std::cout << "Incorrect invocation of program! Try again or execute './P0 -h' to view the help info"
+                  << std::endl;
+        return -1;
+    }
 
     // Setup a file stream to assign src in scanner
-    std::ifstream srcFile("../test.fs");
+    std::ifstream srcFile(fileNameToRead + ".fs");
 
     std::string srcString;
 
@@ -37,7 +88,7 @@ int main(int argc, char **argv) {
 
     /*
     int colNum = 0; // TODO: fully implement
-    int lineCnt = 0; // TODO: fully implmeent - will need too add lineNum back onto TokenRecord
+    int lineCnt = 0; // TODO: fully implement - will need too add lineNum back onto TokenRecord
     int prevLineCnt = 0;
     std::cout << "[" << lineCnt + 1 << "]: " << scanner->c;
     advanceScanner(scanner);
