@@ -15,6 +15,7 @@
 
 int main(int argc, char **argv) {
     std::string fileNameToRead;
+    int lineCnt = 1;
 
     // Parse Command Line Options
     switch (parseCommandLineOpts(argc, argv)) {
@@ -60,7 +61,7 @@ int main(int argc, char **argv) {
     // TODO: break this out into 'testing driver' or something like that...
     // Get next token until we receive the EOF_tk
     while (1) {
-        TokenRecord *token = getNextToken(scanner);
+        TokenRecord *token = getNextToken(scanner, lineCnt);
         printToken(token);
         if (token->tokenId == EOF_tk)
             break;

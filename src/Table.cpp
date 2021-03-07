@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include "State.hpp"
 
-int getTransitionFromChar(char c, State state) {
+int getTransitionFromChar(char c) {
     if (isalpha(c)) return 0; // Letter
     if (isdigit(c)) return 1; // Digit
     if (isspace(c)) return 2; // Whitespace

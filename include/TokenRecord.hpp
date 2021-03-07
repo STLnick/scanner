@@ -113,7 +113,7 @@ const std::string keywords[] = {
 typedef struct {
     tokenID tokenId;       // The token type
     std::string stringVal; // The identifying string value for the token
-    //int lineNum;           // Line number which the token is on in source
+    int lineNum;           // Line number which the token is on in source
 } TokenRecord;
 
 #endif /* SCANNER_TOKEN_RECORD_HPP */

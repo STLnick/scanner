@@ -18,6 +18,6 @@ TokenRecord *scannerParseId(Scanner *scanner);
 
 TokenRecord *scannerParseNumber(Scanner *scanner);
 
-TokenRecord *getNextToken(Scanner *scanner);
+TokenRecord *getNextToken(Scanner *scanner, int &lineCnt);
 
 #endif //SCANNER_SCANNER_HPP

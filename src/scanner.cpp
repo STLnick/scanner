@@ -33,95 +33,101 @@ int isKeyword(std::string str) {
     return 0;
 }
 
-TokenRecord *getKeywordToken(std::string str) {
-    if (str == "begin")  return initToken(str, BEGIN_tk);
-    if (str == "end")    return initToken(str, END_tk);
-    if (str == "loop")   return initToken(str, LOOP_tk);
-    if (str == "whole")  return initToken(str, WHOLE_tk);
-    if (str == "void")   return initToken(str, VOID_tk);
-    if (str == "exit")   return initToken(str, EXIT_tk);
-    if (str == "getter") return initToken(str, GETTER_tk);
-    if (str == "outter") return initToken(str, OUTTER_tk);
-    if (str == "main")   return initToken(str, MAIN_tk);
-    if (str == "if")     return initToken(str, IF_tk);
-    if (str == "then")   return initToken(str, THEN_tk);
-    if (str == "assign") return initToken(str, ASSIGN_tk);
-    if (str == "data")   return initToken(str, DATA_tk);
-    if (str == "proc")   return initToken(str, PROC_tk);
+TokenRecord *getKeywordToken(std::string str, int lineCnt) {
+    if (str == "begin")  return initToken(str, BEGIN_tk, lineCnt);
+    if (str == "end")    return initToken(str, END_tk, lineCnt);
+    if (str == "loop")   return initToken(str, LOOP_tk, lineCnt);
+    if (str == "whole")  return initToken(str, WHOLE_tk, lineCnt);
+    if (str == "void")   return initToken(str, VOID_tk, lineCnt);
+    if (str == "exit")   return initToken(str, EXIT_tk, lineCnt);
+    if (str == "getter") return initToken(str, GETTER_tk, lineCnt);
+    if (str == "outter") return initToken(str, OUTTER_tk, lineCnt);
+    if (str == "main")   return initToken(str, MAIN_tk, lineCnt);
+    if (str == "if")     return initToken(str, IF_tk, lineCnt);
+    if (str == "then")   return initToken(str, THEN_tk, lineCnt);
+    if (str == "assign") return initToken(str, ASSIGN_tk, lineCnt);
+    if (str == "data")   return initToken(str, DATA_tk, lineCnt);
+    if (str == "proc")   return initToken(str, PROC_tk, lineCnt);
 }
 
-TokenRecord *getNextToken(Scanner *scanner) {
+TokenRecord *getTypedToken(State state, std::string str, int lineCnt) {
+    switch (state) {
+        case ASSIGNOP:
+            return initToken(str, ASSIGNOP_tk, lineCnt);
+        case GTEQ:
+            return initToken(str, GTEQ_tk, lineCnt);
+        case EQ:
+            return initToken(str, EQ_tk, lineCnt);
+        case COLONEQ:
+            return initToken(str, COLONEQ_tk, lineCnt);
+        case LTEQ:
+            return initToken(str, LTEQ_tk, lineCnt);
+        case ID:
+            if (isKeyword(str)) {
+                return getKeywordToken(str, lineCnt);
+            }
+            return initToken(str, ID_tk, lineCnt);
+        case NUM:
+            return initToken(str, NUM_tk, lineCnt);
+        case EOF_:
+            return initToken(str, EOF_tk, lineCnt);
+        case SEMI:
+            return initToken(str, SEMI_tk, lineCnt);
+        case PLUS:
+            return initToken(str, PLUS_tk, lineCnt);
+        case MINUS:
+            return initToken(str, MINUS_tk, lineCnt);
+        case MULT:
+            return initToken(str, MULT_tk, lineCnt);
+        case DIVIDE:
+            return initToken(str, DIVIDE_tk, lineCnt);
+        case MOD:
+            return initToken(str, MOD_tk, lineCnt);
+        case DOT:
+            return initToken(str, DOT_tk, lineCnt);
+        case COMMA:
+            return initToken(str, COMMA_tk, lineCnt);
+        case COLON:
+            return initToken(str, COLON_tk, lineCnt);
+        case LPAREN:
+            return initToken(str, LPAREN_tk, lineCnt);
+        case RPAREN:
+            return initToken(str, RPAREN_tk, lineCnt);
+        case LBRACE:
+            return initToken(str, LBRACE_tk, lineCnt);
+        case RBRACE:
+            return initToken(str, RBRACE_tk, lineCnt);
+        case LBRACKET:
+            return initToken(str, LBRACKET_tk, lineCnt);
+        case RBRACKET:
+            return initToken(str, RBRACKET_tk, lineCnt);
+    }
+}
+
+TokenRecord *getNextToken(Scanner *scanner, int &lineCnt) {
     State nextState;
     State state = INITIAL;
     State tempState;
     std::string str;
-    int isInComment = 0;
     int transition;
 
     while (state != FINAL) {
-        transition = getTransitionFromChar(scanner->c, state);
+        transition = getTransitionFromChar(scanner->c);
         nextState = Table[state][transition];
+        if(scanner->c == '\n' && state == INITIAL) {
+            lineCnt++;
+        }
 
         // Handle errors
         if (nextState == ERROR) {
-            std::cout << "SCANNER ERROR: Unexpected character `" << scanner->c << "` (" << (int) scanner->c << ")"
-                      << std::endl;
+            std::cout << "SCANNER ERROR: Unexpected character `" << scanner->c << "` (" << (int) scanner->c << ")" << std::endl;
             exit(1);
         }
 
         if (nextState == FINAL) {
-            // determine token type
-            switch (state) {
-                case ASSIGNOP:
-                    return initToken(str, ASSIGNOP_tk);
-                case GTEQ:
-                    return initToken(str, GTEQ_tk);
-                case EQ:
-                    return initToken(str, EQ_tk);
-                case COLONEQ:
-                    return initToken(str, COLONEQ_tk);
-                case LTEQ:
-                    return initToken(str, LTEQ_tk);
-                case ID:
-                    if (isKeyword(str)) {
-                        return getKeywordToken(str);
-                    }
-                    return initToken(str, ID_tk);
-                case NUM:
-                    return initToken(str, NUM_tk);
-                case EOF_:
-                    return initToken(str, EOF_tk);
-                case SEMI:
-                    return initToken(str, SEMI_tk);
-                case PLUS:
-                    return initToken(str, PLUS_tk);
-                case MINUS:
-                    return initToken(str, MINUS_tk);
-                case MULT:
-                    return initToken(str, MULT_tk);
-                case DIVIDE:
-                    return initToken(str, DIVIDE_tk);
-                case MOD:
-                    return initToken(str, MOD_tk);
-                case DOT:
-                    return initToken(str, DOT_tk);
-                case COMMA:
-                    return initToken(str, COMMA_tk);
-                case COLON:
-                    return initToken(str, COLON_tk);
-                case LPAREN:
-                    return initToken(str, LPAREN_tk);
-                case RPAREN:
-                    return initToken(str, RPAREN_tk);
-                case LBRACE:
-                    return initToken(str, LBRACE_tk);
-                case RBRACE:
-                    return initToken(str, RBRACE_tk);
-                case LBRACKET:
-                    return initToken(str, LBRACKET_tk);
-                case RBRACKET:
-                    return initToken(str, RBRACKET_tk);
-            }
+            return getTypedToken(state, str, lineCnt);
+        } else if (nextState == EOF_) {
+            return initToken("\0", EOF_tk, lineCnt);
         } else if (nextState == CMT_ST_A) {
             tempState = state; // save the current state when comment started
             state = nextState;
