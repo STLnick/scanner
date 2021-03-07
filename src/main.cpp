@@ -6,6 +6,7 @@
 #include <fstream>
 #include <istream>
 #include <iostream>
+#include "parseCommandLineOpts.hpp"
 #include "scanner.hpp"
 #include "TokenRecord.hpp"
 #include "token.hpp"
@@ -13,16 +14,20 @@
 
 int main(int argc, char **argv) {
 
-
-    /* ------------------------------------ */
-    // Testing a SCANNER
-    /* ------------------------------------ */
+    // Parse Command Line Options
+    switch (parseCommandLineOpts(argc, argv)) {
+        case -1:
+            std::cout << "Invalid Usage - Terminating" << std::endl;
+            return -1;
+        case 1:
+            return 0;
+    }
 
     // TODO: open the file based on the arguments provided to the program
     // TODO: file extenstion checks, etc. GET CODE FROM P0 for CL ARGS PARSING!
 
     // Setup a file stream to assign src in scanner
-    std::ifstream srcFile("../test2.fs");
+    std::ifstream srcFile("../test.fs");
 
     std::string srcString;
 
@@ -51,13 +56,6 @@ int main(int argc, char **argv) {
             colNum++;
         }
 
-        if (scanner->c == '\0')
-            std::cout << "NULL TERMINATOR";
-
-        std::cout << scanner->c;
-
-        advanceScanner(scanner);
-    }
      */
 
     // Get next token until we receive the EOF_tk
