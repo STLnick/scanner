@@ -3,6 +3,7 @@
  * 2/15/21
  * scanner
  */
+#include <cstdlib>
 #include <fstream>
 #include <istream>
 #include <iostream>
@@ -17,6 +18,8 @@ int main(int argc, char **argv) {
     std::string fileNameToRead;
     int lineCnt = 1;
 
+    std::cout << "NICK prequel" << std::endl;
+
     // Parse Command Line Options
     switch (parseCommandLineOpts(argc, argv)) {
         case -1:
@@ -26,17 +29,26 @@ int main(int argc, char **argv) {
             return 0;
     }
 
+    std::cout << "NICK 0" << std::endl;
+
     // Setup / validate file to read from using keyboard input, input redirection or command line argument
     init(argc, argv, fileNameToRead);
+    fileNameToRead += ".fs";
+
+    std::cout << "NICK 1" << std::endl;
 
     // Setup a file stream to assign src in scanner
-    std::ifstream srcFile(fileNameToRead + ".fs");
+    std::ifstream srcFile(fileNameToRead.c_str());
+
+    std::cout << "NICK 2" << std::endl;
+
     std::string srcString;
     readSrcIntoString(srcFile, srcString);
 
+    std::cout << "NICK 3" << std::endl;
+
     // Initialize the Scanner
     Scanner *scanner = initScanner(srcString);
-
 
     /* ------------------------------------ */
     // Test Scanner

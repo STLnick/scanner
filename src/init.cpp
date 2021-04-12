@@ -1,6 +1,7 @@
 //
 // Created by Nick Ray on 3/7/21.
 //
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <string>
